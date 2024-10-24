@@ -25,12 +25,16 @@ resource "google_container_cluster" "primary-cluster" {
     services_secondary_range_name = var.secondary-service-range
   }
 
+  datapath_provider = "ADVANCED_DATAPATH"  ### enabled dataplane v2
+
   private_cluster_config {
     enable_private_nodes = true
     enable_private_endpoint = false
     master_ipv4_cidr_block = var.master_ipv4_cidr_block
 
   }
+
+  
   
   master_authorized_networks_config {
     cidr_blocks {
@@ -77,3 +81,4 @@ resource "google_container_node_pool" "primary_node" {
   }
 
 }
+
