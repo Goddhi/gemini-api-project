@@ -25,24 +25,24 @@ variable "region" {
   description = "region name"
 }
 
-variable "pod-range-name" {
+variable "secondary_ip_range_pods_name" {
   type = string
-  description = "pod range name"
+  description = "secondary pod range name"
 }
 
 variable "secondary-pods-range" {
   type = string
-  description = "seondary pod range"
+  description = "secondary pod ip range"
 }
 
-variable "service-range-name" {
+variable "secondary_ip_range_services_name" {
   type = string
   description = "sevicce range name"
 }
 
-variable "seondary-service-range" {
+variable "secondary-service-range" {
   type = string
-  description = "secondary service range"
+  description = "secondary service ip range"
 }
 
 variable "nat_ip_allocate_option" {
@@ -66,3 +66,9 @@ variable "internal_source_ranges" {
     description = "Internal source range allowed"
     type        = list(string)
 }
+
+variable "network_tags" {
+  type = string
+  description = "target tag for gke cluster"
+}
+

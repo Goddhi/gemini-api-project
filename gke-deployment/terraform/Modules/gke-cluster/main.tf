@@ -9,13 +9,14 @@ provider "kubernetes" {
 
 resource "google_container_cluster" "primary-cluster" {
   name = var.cluster_name
-  location = var.zone
+  location = var.gke-zone
 
   # enable_autopilot = true
 
   network = var.vpc-name
   subnetwork = var.subnet-name
-  # node_locations = var.zone
+  
+  
 
   remove_default_node_pool = true
   initial_node_count       = 1
@@ -25,7 +26,7 @@ resource "google_container_cluster" "primary-cluster" {
     services_secondary_range_name = var.secondary-service-range
   }
 
-  datapath_provider = "ADVANCED_DATAPATH"  ### enabled dataplane v2
+  # datapath_provider = "ADVANCED_DATAPATH"  ### enabled dataplane v2
 
   private_cluster_config {
     enable_private_nodes = true
@@ -47,19 +48,20 @@ resource "google_container_cluster" "primary-cluster" {
 
 }
 
+
 resource "kubernetes_namespace" "gemini-api-namespace" {
   metadata {
-    name = var.namespace-name
+    name = var.namespace
   }
 }
 
 resource "google_container_node_pool" "primary_node" {
   cluster = google_container_cluster.primary-cluster.name
- 
+  
 
   autoscaling {
     min_node_count = 0
-    max_node_count = 5
+    max_node_count = 1
   } 
    management {
     auto_repair  = true
@@ -67,18 +69,16 @@ resource "google_container_node_pool" "primary_node" {
   }
   node_config {
 
-    machine_type = "e2-standard-2"  # Cost-effective general-purpose machine
-    disk_size_gb = 50
+    machine_type = var.machine_type
+    disk_size_gb = var.disk_size_gb
 
     spot = true
 
     labels = {
-      environment = "load-test"
-      purpose     = "load-testing"
+      environment = var.environment
     }
 
-  
+    tags = [ var.network_tags ]
   }
-
 }
 
