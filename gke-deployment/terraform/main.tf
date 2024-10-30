@@ -1,3 +1,5 @@
+
+
 module "vpc-network" {
   source = "./Modules/vpc-network"
   project-id = var.project-id
@@ -8,10 +10,10 @@ module "vpc-network" {
   secondary_ip_range_pods_name = var.secondary_ip_range_pods_name
   secondary-pods-range = var.secondary-pods-range
   secondary-service-range = var.secondary-service-range
-  internal_source_ranges = var_internal_source_range
+  internal_source_ranges = var.internal_source_ranges
   allowed_ports = var.allowed_ports
   ip_cidr_range = var.ip_cidr_range 
-  network_tags = var.network_tags
+  # network_tags = var.network_tags
    
 }
 
@@ -32,6 +34,24 @@ module "gke-cluster" {
   machine_type = var.machine_type
   disk_size_gb = var.disk_size_gb
   environment = var.environment
-  network_tags = module.vpc-network.network_tags
+  # network_tags = module.vpc-network.network_tags
 
 }
+
+# resource "google_project_service" "apis" {
+#   for_each = toset([
+#     "cloudresourcemanager.googleapis.com",
+#     "container.googleapis.com",
+#     "containersecurity.googleapis.com",
+#     "artifactregistry.googleapis.com",
+#     "containerscanning.googleapis.com"
+#    ])
+
+#   service = each.key
+
+#   disable_on_destroy = true
+# }
+
+
+
+

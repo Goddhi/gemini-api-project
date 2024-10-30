@@ -67,8 +67,8 @@ variable "internal_source_ranges" {
     type        = list(string)
 }
 
-variable "network_tags" {
-  type = string
-  description = "target tag for gke cluster"
-}
+# variable "network_tags" {
+#   type = string
+#   description = "target tag for gke cluster"
+# }
 

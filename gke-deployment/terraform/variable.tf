@@ -5,16 +5,16 @@ variable "project-id" {
 
 variable "region" {
   description = "gke region"
-  type = "string"
+  type = string
 }
 
 variable "zone" {
   description = "gke zone"
-  type = "string"
+  type = string
 }
 variable "gke-zone" {
   description = "gke zone"
-  type = "string"
+  type = string
 }
 variable "vpc-name" {
   description = "vpc name"
@@ -116,7 +116,7 @@ variable "environment" {
   description = "environment of gke"
 }
 
-variable "network_tags" {
-  type = string
-  description = "firewall tag for gke"
-}
+# variable "network_tags" {
+#   type = string
+#   description = "firewall tag for gke"
+# }

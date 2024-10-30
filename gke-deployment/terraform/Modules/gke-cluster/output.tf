@@ -1,5 +1,5 @@
 output "cluster_endpoint" {
-  value = google_container_cluster.primary.endpoint
+  value = google_container_cluster.primary-cluster.endpoint
 }
 
 output "cluster_name" {

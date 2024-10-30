@@ -19,7 +19,7 @@ variable "pod-range-name" {
 
 variable "secondary-service-range" {
   type = string
-  description = "seondary pod range"
+  description = "seondary service range"
 }
 
 variable "secondary-pods-range" {
@@ -70,7 +70,7 @@ variable "environment" {
   description = "environment of gke"
 }
 
-variable "network_tags" {
-  type = string
-  description = "network tags for firewall rule"
-}
+# variable "network_tags" {
+#   type = list(string)
+#   description = "network tags for firewall rule"
+# }

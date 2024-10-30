@@ -17,5 +17,6 @@ resource "google_compute_firewall" "allow_internal" {
     google_compute_network.vpc-network
   ]
 
-  target_tags = [var.network_tags]
+  # target_tags = [ var.network_tags ] 
 }
+  

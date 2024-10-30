@@ -23,6 +23,5 @@ resource "google_compute_subnetwork" "vpc-private-subnet" {
     ip_cidr_range = var.secondary-service-range
   }
   
-  
 }
 

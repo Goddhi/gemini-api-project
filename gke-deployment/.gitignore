@@ -1,0 +1,2 @@
+gke-deployment/terraform/terraform-auto.tfvars
+gke-deployment/terraform/.terraform.lock.hcl

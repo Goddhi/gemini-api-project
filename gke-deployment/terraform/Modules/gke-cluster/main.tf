@@ -1,7 +1,7 @@
 
 data "google_client_config" "default" {}
 provider "kubernetes" {
-  host  = "https://${google_container_cluster.primary.endpoint}"
+  host  = "https://${google_container_cluster.primary-cluster.endpoint}"
   token = data.google_client_config.default.access_token
   cluster_ca_certificate = base64decode(google_container_cluster.primary-cluster.master_auth.0.cluster_ca_certificate)
 
@@ -17,13 +17,13 @@ resource "google_container_cluster" "primary-cluster" {
   subnetwork = var.subnet-name
   
   
-
+  deletion_protection = false
   remove_default_node_pool = true
   initial_node_count       = 1
 
   ip_allocation_policy {
-    cluster_secondary_range_name = var.secondary-pods-range
-    services_secondary_range_name = var.secondary-service-range
+    cluster_secondary_range_name = var.pod-range-name
+    services_secondary_range_name = var.secondary_ip_range_services_name
   }
 
   # datapath_provider = "ADVANCED_DATAPATH"  ### enabled dataplane v2
@@ -32,7 +32,6 @@ resource "google_container_cluster" "primary-cluster" {
     enable_private_nodes = true
     enable_private_endpoint = false
     master_ipv4_cidr_block = var.master_ipv4_cidr_block
-
   }
 
   
@@ -57,6 +56,7 @@ resource "kubernetes_namespace" "gemini-api-namespace" {
 
 resource "google_container_node_pool" "primary_node" {
   cluster = google_container_cluster.primary-cluster.name
+  location = var.gke-zone
   
 
   autoscaling {
@@ -78,7 +78,8 @@ resource "google_container_node_pool" "primary_node" {
       environment = var.environment
     }
 
-    tags = [ var.network_tags ]
+    # tags = [ var.network_tags ]
   }
+  depends_on = [ google_container_cluster.primary-cluster ]
 }
-
+ 

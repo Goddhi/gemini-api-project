@@ -24,6 +24,6 @@ output "secondary-pods-range" {
   value = google_compute_subnetwork.vpc-private-subnet.secondary_ip_range[1].ip_cidr_range
 }
 
-output "network_tags" {
- value = google_compute_firewall.allow_internal.target_tags
-}
+# output "network_tags" {
+#  value = google_compute_firewall.allow_internal.target_tags
+# }
