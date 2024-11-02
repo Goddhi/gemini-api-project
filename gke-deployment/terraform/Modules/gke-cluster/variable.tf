@@ -70,6 +70,25 @@ variable "environment" {
   description = "environment of gke"
 }
 
+variable "project-id" {
+  description = "project id name"
+  type = string
+}
+
+variable "account_id" {
+  description = "Google Cloud SVC"
+  type = string
+}
+
+variable "svc_display_name" {
+  type = string
+  description = "svc display name"
+}
+
+variable "ksa" {
+  type = string
+  description = "k8s sa"
+}
 # variable "network_tags" {
 #   type = list(string)
 #   description = "network tags for firewall rule"

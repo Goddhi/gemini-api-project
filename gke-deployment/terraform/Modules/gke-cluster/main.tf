@@ -49,6 +49,10 @@ resource "google_container_cluster" "primary-cluster" {
     enable_components = ["SYSTEM_COMPONENTS", "WORKLOADS"]
   }
 
+  workload_identity_config {
+    workload_pool = "${var.project-id}.svc.id.goog"
+  }
+
 }
 
 
@@ -56,6 +60,42 @@ resource "kubernetes_namespace" "gemini-api-namespace" {
   metadata {
     name = var.namespace
   }
+}
+
+resource "google_service_account" "workload_svc" {
+  account_id = var.account_id
+  display_name = var.svc_display_name
+  project = var.project-id
+}
+
+resource "google_project_iam_member" "gemini_app_roles" {
+  for_each = toset([
+    "roles/logging.logWriter"
+  ])
+
+  role = each.key
+  member = "serviceAccount:${google_service_account.service_account.email}"
+  project = var.project-id
+}
+
+resource "kubernetes_service_account" "ksa" {
+  metadata {
+    name = var.ksa
+    namespace = var.namespace
+    annotations = {
+            "iam.gke.io/gcp-service-account" = google_service_account.workload_svc.email
+    }
+  }
+
+  depends_on = [ google_container_cluster.primary-cluster, google_container_node_pool.primary_node]
+}
+
+resource "google_service_account_iam_binding" "workload_identity_binding" {
+  service_account_id = google_service_account.workload_svc.name
+  role               = "roles/iam.workloadIdentityUser"
+  members = [
+    "serviceAccount:${var.project-id}.svc.id.goog[${var.namespace}/${kubernetes_service_account.ksa.metadata[0].name}]"
+  ]
 }
 
 resource "google_container_node_pool" "primary_node" {
@@ -84,12 +124,12 @@ resource "google_container_node_pool" "primary_node" {
       environment = var.environment
     }
 
-        oauth_scopes = [
-      "https://www.googleapis.com/auth/logging.write",
-      "https://www.googleapis.com/auth/devstorage.read_only",
-      "https://www.googleapis.com/auth/service.management.readonly",
-      "https://www.googleapis.com/auth/servicecontrol",
-    ]
+    #     oauth_scopes = [
+    #   "https://www.googleapis.com/auth/logging.write",
+    #   "https://www.googleapis.com/auth/devstorage.read_only",
+    #   "https://www.googleapis.com/auth/service.management.readonly",
+    #   "https://www.googleapis.com/auth/servicecontrol",
+    # ]
 
     # tags = [ var.network_tags ]
   }

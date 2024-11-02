@@ -116,6 +116,20 @@ variable "environment" {
   description = "environment of gke"
 }
 
+variable "account_id" {
+  type = string
+  description = "Google CLoud SVC"
+}
+
+variable "svc_display_name" {
+  type = string
+  description = "svc display name"
+}
+
+variable "ksa" {
+  type = string
+  description = "k8s sa"
+}
 # variable "network_tags" {
 #   type = string
 #   description = "firewall tag for gke"

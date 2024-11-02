@@ -35,6 +35,10 @@ module "gke-cluster" {
   disk_size_gb = var.disk_size_gb
   environment = var.environment
   # network_tags = module.vpc-network.network_tags
+  project-id = var.project-id
+  account_id = var.account_id
+  svc_display_name = var.svc_display_name
+  ksa = var.ksa
 
 }
 
