@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gemni-app
+  labels:
+    app: gemini-app
+spec:
+  replicas: 1  # Number of replicas for scaling
+  selector:
+    matchLabels:
+      app: gemini-app
+  template:
+    metadata:
+      labels:
+        app: gemini-app
+    spec:
+      containers:
+      - name: gemini-app
+        image: zr0th/gcloud-ai-hack:latest  # Replace with your image path
+        ports:
+        - containerPort: 4000  # The port your app listens on
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 15
+          periodSeconds: 10
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gemini-app-svc
+spec:
+  selector:
+    app: python-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: LoadBalancer  # Exposes the service externally
