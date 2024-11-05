@@ -1,0 +1,75 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "ddosapp"
+version = "0.1"
+
+dependencies = [
+    "fastapi",
+    "uvicorn[standard]",
+    "pydantic-core",
+    # "pydantic[email]",
+    # "pydantic-settings",
+    # "pydantic-extra-types",
+#     "redis",
+#     "alembic",
+#     "passlib[bcrypt]",
+#     "psycopg2-binary",
+#     "python-jose[cryptography]",
+#     "sqlalchemy",
+#     "asyncpg",
+#     "sentry-sdk[fastapi]",
+#     "python-multipart",
+#     "celery",
+#     "flower",
+#     "anyio",
+    "logfire",
+    "scalar-fastapi",
+]
+#
+# [project.optional-dependencies]
+# dev = [
+#     "pytest",
+#     "httpx",
+#     "pytest-env",
+#     "pyright",
+#     "coverage",
+#     "ruff",
+#     "pre-commit",
+# ]
+# prod = ["python-json-logger", "gunicorn"]
+#
+#
+# [tool.ruff]
+# line-length = 88
+# target-version = "py311"
+# fix = true
+#
+# [tool.ruff.lint]
+# # Enable Pyflakes `E` and `F` codes by default.
+# select = [
+#     # Pyflakes
+#     "F",
+#     # Pycodestyle
+#     "E",
+#     "W", # pycodestyle warnings
+#     # isort
+#     "I001",
+# ]
+#
+# # Allow unused variables when underscore-prefixed.
+# dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+#
+# [tool.ruff.lint.mccabe]
+# # Unlike Flake8, default to a complexity level of 10.
+# max-complexity = 10
+#
+# [tool.coverage.run]
+# omit = ["tests/*", "test_*.py", "migrations/*"]
+#
+# [tool.pyright]
+# venvPath = "."
+# venv = ".venv"
+# exclude = ["migrations", "alembic", "tests", "test_*.py", "alembic/*"]
