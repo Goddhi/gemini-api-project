@@ -7,7 +7,7 @@ import logging
 import json
 from collections import Counter
 from dotenv import load_dotenv
-load_dotenv()
+load_dotenv(/app/.env)
 
 
 from typing import Any
