@@ -95,7 +95,7 @@ async def process_log(file: UploadFile = File(...)):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error processing the request: {e}")
 
-    return {"extracted_data": most_common_ip}
+    return {"ip": most_common_ip}
     # # Prepare the input text for the model, including the goal statement
     # input_text = f"{json_data}\n\nExtract the IP address in this log file and return it in a JSON response."
 
