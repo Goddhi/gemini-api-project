@@ -21,6 +21,7 @@ WORKDIR /app
 
 # copy scripts
 COPY ./scripts/ /app/scripts/
+COPY ./.env /app
 
 # Add scripts folder to PATH
 ENV PATH "$PATH:/app/scripts"
