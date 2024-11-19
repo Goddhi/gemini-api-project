@@ -1,4 +1,4 @@
-# Link to to test the Applocation
+# Link to to test the Application
 
 http://34.56.239.93/docs#/default/fetch_and_process_logs
 
